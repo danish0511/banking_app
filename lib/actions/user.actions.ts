@@ -4,11 +4,16 @@ import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
+import { PT_Sans_Narrow } from "next/font/google";
 
-export const signIn = async () => {
+export const signIn = async ({email, password}: signInProps) => {
   try {
-    // Mutation/database/make fetch
-  } catch (error) {
+    const { account } = await createAdminClient();
+
+    const response = await account.createEmailPasswordSession(email,password)
+
+    return parseStringify(response);
+    } catch (error) {
     console.error(error);
   }
 };
